@@ -8,77 +8,86 @@ import com.regras.*;
 
 public class PNBatalhaNaval extends JPanel implements MouseListener
 {
-    double xIni = 75.0, yIni = 75.0, larg = 80.0, alt = 80.0, espLinha = 5.0 ;
+    double xCorner = 75.0 ; // x do canto esquerdo superior
+    double yCorner = 75.0 ; // y do canto esquerdo superior
+    double width = 30.0 ; // largura do retângulo
+    double height = 30.0 ; // altura do retângulo
+    float lineGap = 1.0f ; // espessura da linha
 
-    Celula tab[][] = new Celula[3][3] ;
+    Celula tab[][] = new Celula[15][15] ;
 
-    private Line2D.Double ln[] = new Line2D.Double[4] ;
+    private Rectangle2D.Double box1[][] = new Rectangle2D.Double[15][15] ;
+    private Rectangle2D.Double box2[][] = new Rectangle2D.Double[15][15] ;
     private CtrlRegras ctrl ;
+
+    private final int NUM_LINES = 15 ;
+    private final int NUM_COLUMNS = 15 ;
 
 
     public PNBatalhaNaval(CtrlRegras c)
     {
-        double x = xIni, y = yIni ;
+        double x, y ;
         ctrl = c ;
 
-        for( int i = 0 ; i < 3 ; i++ )
-        {
-            x = xIni ;
-
-            for( int j = 0 ; j < 3 ; j++ )
-            {
-                tab[i][j] = new Celula(x,y) ;
-                x += larg + espLinha ;
-            }
-            y += alt + espLinha ;
-        }
-
         addMouseListener(this) ;
-        ln[0]=new Line2D.Double(155.0,75.0,155.0,325.0);
-        ln[1]=new Line2D.Double(240.0,75.0,240.0,325.0);
-        ln[2]=new Line2D.Double(75.0,155.0,325.0,155.0);
-        ln[3]=new Line2D.Double(75.0,240.0,325.0,240.0);
+
+        // Tamanho de cada retângulo é de 30px x 30px
+        for (int line = 0 ; line < NUM_LINES; line++)
+        {
+            y = yCorner + ( line * 30.0 ) ;
+
+            for (int column = 0 ; column < NUM_COLUMNS; column++)
+            {
+                x = xCorner + ( column * 30.0 ) ;
+                box1[line][column] = new Rectangle2D.Double(x, y, width, height) ;
+                box2[line][column] = new Rectangle2D.Double(x + 550, y, width, height) ;
+            }
+        }
     }
 
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        Graphics2D g2d=(Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
 
-        int mat[][]=ctrl.getMatriz();
-        int vez = ctrl.getVez();
+        int mat[][] = ctrl.getMatrizPlayer1();
 
-        g2d.setStroke(new BasicStroke(5.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f));
+        g2d.setStroke(new BasicStroke( lineGap, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 20.0f));
 
-        // inserir aqui o teste do jogador da vez e a defini��o da cor dos segmentos de reta
-        Color turnColor = vez == -1 ? Color.RED : Color.GREEN;
-        vez = vez == -1 ? 5 : -1;
-        ctrl.setVez(vez);
-
-        // inserir aqui os comandos para desenhar os 4 segmentos de reta
-        g2d.setPaint(turnColor);
-        g2d.draw(ln[0]);
-        g2d.draw(ln[1]);
-        g2d.draw(ln[2]);
-        g2d.draw(ln[3]);
-
-        for(int i=0;i<3;i++)
+        // Iteração para preencher os quadrados de cor
+        for(int i = 0 ;i < NUM_LINES; i++)
         {
-            for(int j=0;j<3;j++)
+            for(int j = 0 ; j < NUM_COLUMNS; j++)
             {
-                if(mat[i][j]!=0)
+                if(mat[i][j] == 0)
                 {
-                    // inserir aqui o c�digo para definir a cor do quadrado a ser desenhado
-                    // e o desenho desse quadrado
-                    if (mat[i][j] == -1)
-                        g2d.setPaint(Color.GREEN);
-                    else
-                        g2d.setPaint(Color.RED);
-
-                    Rectangle2D rt= new Rectangle2D.Double(tab[i][j].x+25,tab[i][j].y+25,30,30);
-
-                    g2d.fill(rt);
+                    g2d.setPaint( Color.WHITE );
+                    g2d.fill( box1[i][j] );
+                    g2d.fill( box2[i][j] );
                 }
+                else if(mat[i][j] == 1)
+                {
+                    g2d.setPaint( Color.GRAY );
+                    g2d.fill( box1[i][j] );
+                }
+            }
+        }
+
+        // Iteração para desenhar o tabuleiro
+        g2d.setPaint(Color.BLACK);
+        for ( int i = 0; i < NUM_LINES ; i++)
+        {
+            String number = (i >= 9) ? Integer.toString(i + 1) : " " + Integer.toString(i + 1) ;
+            g2d.drawString(Character.toString(65 + i), 55, 65 + 30*(i + 1)) ;
+            g2d.drawString(number, 50 + 30*(i + 1), 65) ;
+
+            g2d.drawString(Character.toString(65 + i), 605, 65 + 30*(i + 1)) ;
+            g2d.drawString(number, 600 + 30*(i + 1), 65) ;
+
+            for (int column = 0; column < NUM_COLUMNS; column++)
+            {
+                g2d.draw( box1[i][column] ) ;
+                g2d.draw( box2[i][column] ) ;
             }
         }
     }
@@ -90,39 +99,25 @@ public class PNBatalhaNaval extends JPanel implements MouseListener
         int x = e.getX();
         int y = e.getY();
 
-        linha = ( y / 75 ) - 1 ;
-        coluna = ( x / 75 ) - 1 ;
+        linha = ( y - 75) / 30 + 1 ;
+        coluna = ( x - 75) / 30 + 1 ;
 
-        if (ctrl.jogadaValida( (int) linha, (int) coluna ) == true)
-        {
-            ctrl.setCasa( linha , coluna );
+        System.out.println(linha);
+        System.out.println(coluna);
 
-            if( ctrl.checaVitoria() == true )
-            {
-                repaint();
-                String resposta = ctrl.getVez() == -1 ?  "Verde" : "Vermelho";
-                JOptionPane.showMessageDialog(this,resposta + " ganhou!","Resultado",JOptionPane.DEFAULT_OPTION);
-                ctrl.reset();
-            }
-            else if (ctrl.todasCasasOcupadas() == true)
-            {
-                ctrl.reset();
-            }
-
-            repaint();
-        }
+        repaint();
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e)
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e)
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override

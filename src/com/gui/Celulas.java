@@ -2,9 +2,9 @@ package com.gui;
 
 class Celula
 {
-    double x,y;
+    double x, y ;
 
-    Celula(double x,double y)
+    Celula( double x, double y )
     {
         this.x = x ;
         this.y = y ;
