@@ -5,7 +5,7 @@ import javax.swing.*;
 public class CtrlRegras {
     // 0: indica uma casa não preenchida
     // 1: indica o mouse sobre casa - cor: cinza
-    // 5:  indica uma casa preenchida com um retângulo vermelho
+    // 5: indica uma casa preenchida com um retângulo vermelho
 
     private int tabPlayer1 [][]= {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -39,9 +39,10 @@ public class CtrlRegras {
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
-    int vez = 5;
+    private int vez = 5;
 
-    public CtrlRegras() {
+    public CtrlRegras()
+    {
     }
 
     public int[][] getMatrizPlayer1() {
@@ -53,10 +54,10 @@ public class CtrlRegras {
     }
 
     public int getVez() {
-        return vez;
+        return vez ;
     }
 
     public void setVez(int vez) {
-        this.vez = vez;
+        this.vez = vez ;
     }
 }
