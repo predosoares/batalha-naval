@@ -1,7 +1,6 @@
 package com.company;
 
 import com.gui.FRBatalhaNaval;
-import com.regras.CtrlRegras;
 
 public class Main
 {

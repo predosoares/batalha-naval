@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class FRBatalhaNaval extends JFrame
 {
-    final int LARG_DEFAULT = 1130 ;
+    final int LARG_DEFAULT = 1140 ;
     final int ALT_DEFAULT = 600 ;
 
     public FRBatalhaNaval()
@@ -19,12 +19,12 @@ public class FRBatalhaNaval extends JFrame
         int x = screenWidth/2 - LARG_DEFAULT/2 ;
         int y = screenHeight/2 - ALT_DEFAULT/2 ;
 
-        setResizable(false);
+        setResizable(false) ;
         setBounds( x, y, LARG_DEFAULT, ALT_DEFAULT) ;
         setDefaultCloseOperation(EXIT_ON_CLOSE) ;
         setBackground(Color.BLACK) ;
         setTitle("Batalha Naval") ;
 
-        getContentPane().add( new PNInicio(this) ) ;
+        GUIController.getGUIController().novaSessao( this ) ;
     }
 }

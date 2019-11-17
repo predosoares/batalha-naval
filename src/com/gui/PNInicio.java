@@ -8,21 +8,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class PNInicio extends JPanel implements ActionListener, Observer
+public class PNInicio extends JPanel implements ActionListener
 {
-    JLabel player1Label = new JLabel("Jogador 1 : ");
-    JLabel player2Label = new JLabel("Jogador 2 : ");
+    JLabel player1Label = new JLabel("Jogador 1 : ") ;
+    JLabel player2Label = new JLabel("Jogador 2 : ") ;
     JTextField player1Field = new JTextField(30) ;
     JTextField player2Field = new JTextField(30) ;
     JButton button = new JButton("Começar") ;
-    JFrame frame ;
 
-    public PNInicio( FRBatalhaNaval f )
+    public PNInicio()
     {
         Dimension dText = player1Label.getPreferredSize() ;
         Dimension dButton = button.getPreferredSize() ;
 
-        this.frame = f ;
         this.setLayout( null ) ;
 
         player1Label.setBounds(400, 200, dText.width, dText.height) ;
@@ -33,13 +31,13 @@ public class PNInicio extends JPanel implements ActionListener, Observer
         button.setBounds( 550 - dButton.width/2 - 10, 350, dButton.width, dButton.height) ;
         button.addActionListener(this) ;
 
-        this.add(player1Label) ;
-        this.add(player2Label) ;
-        this.add(player1Field) ;
-        this.add(player2Field) ;
-        this.add(button) ;
+        this.add( player1Label ) ;
+        this.add( player2Label ) ;
+        this.add( player1Field ) ;
+        this.add( player2Field ) ;
+        this.add( button ) ;
 
-        this.setVisible(true) ;
+        this.setVisible( true ) ;
     }
 
     public void actionPerformed( ActionEvent actionEvent )
@@ -52,9 +50,9 @@ public class PNInicio extends JPanel implements ActionListener, Observer
 
         if( !player1.isEmpty() && !player2.isEmpty() )
         {
-            this.setVisible( false ) ;
-            frame.getContentPane().add( new PNPosicionamento() ) ;
-            frame.revalidate() ;
+            Fachada.getFachada().setPlayer1( player1 ) ;
+            Fachada.getFachada().setPlayer2( player2 ) ;
+            GUIController.getGUIController().goToPainelPosicionamento() ;
         }
     }
 }
