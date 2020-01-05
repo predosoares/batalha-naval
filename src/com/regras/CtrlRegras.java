@@ -17,6 +17,7 @@ import java.io.Serializable;
 
 class CtrlRegras implements Observable, Serializable
 {
+	private static final long serialVersionUID = 1L;
     private No tabPlayer1 [][] ;
     private No tabPlayer2 [][] ;
 
@@ -44,8 +45,8 @@ class CtrlRegras implements Observable, Serializable
     {
         vez = 0 ;
         tiros = 3 ;
-        nomePlayer1 = null;
-        nomePlayer2 = null;
+//        nomePlayer1 = null;
+//        nomePlayer2 = null;
 
         tabPlayer1 = new No[15][15];
         for (int i = 0; i < tabPlayer1.length; i++)

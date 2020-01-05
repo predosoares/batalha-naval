@@ -55,6 +55,6 @@ public class Fachada
     
     public void salvaJogo( ) { ctrl.salvaJogo( ) ; }
     
-    public void carregaJogo( ) { ctrl.carregaJogo( ) ; }
+    public Fachada carregaJogo( ) { ctrl = ctrl.carregaJogo( ) ; return f ; }
 
 }

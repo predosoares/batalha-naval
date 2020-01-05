@@ -58,8 +58,11 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
         labelPlayer1.setFont( fontName ) ;
         labelPlayer1.setForeground( new Color(81, 81, 81) );
-        System.out.println("asdasdasdsadasda\n\n\n");
-        System.out.println(Fachada.getFachada());
+//        System.out.println(Fachada.getFachada());
+        System.out.println(Fachada.getFachada().getPlayer1());
+        System.out.println(Fachada.getFachada().getPlayer2());
+        System.out.println(Fachada.getFachada().getMatrizPlayer1()[14][14].getIdentificador());
+        System.out.println(Fachada.getFachada().getMatrizPlayer1()[14][14].getNo());
         labelPlayer1.setText( "TABULEIRO DE " + player1.toUpperCase() ) ;
         dLabelPlayer1 = labelPlayer1.getPreferredSize() ;
         labelPlayer1.setBounds( xCorner, height, dLabelPlayer1.width, dLabelPlayer1.height ) ;

@@ -44,7 +44,6 @@ public class PNMenu extends JPanel implements ActionListener
         }
         else if ( actionEvent.getSource() == buttonCarregarPartida )
         {
-        	Fachada.getFachada() ;
         	Fachada.getFachada().carregaJogo() ;
         	GUIController.getGUIController().goToPainelBatalhaNaval() ;
         }
