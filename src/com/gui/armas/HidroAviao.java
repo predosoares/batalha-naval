@@ -1,7 +1,6 @@
 package com.gui.armas;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class HidroAviao extends Arma
 {
@@ -11,7 +10,8 @@ public class HidroAviao extends Arma
         this.width = 90 ;
         this.height = 60 ;
         this.color = new Color(24, 117, 38) ;
-        this.matriz = new int[][] {{0, (int) 'h', 0 }, {(int) 'h', 0, (int) 'h'}} ;
+        this.matriz = new int[][] {{TipoArma.Vazio.ordinal(), TipoArma.HidroAviao.ordinal(), TipoArma.Vazio.ordinal() },
+                                    {TipoArma.HidroAviao.ordinal(), TipoArma.Vazio.ordinal(), TipoArma.HidroAviao.ordinal()}} ;
 
         this.setSize( width, height) ;
         repaint() ;

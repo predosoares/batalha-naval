@@ -4,17 +4,31 @@ import com.gui.armas.*;
 import com.regras.Fachada;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIController
 {
-    private static GUIController guiCtrl = null ;
-    private JFrame mainFrame = null ;
-    private JPanel pnInicio ;
-    private JPanel pnPosicionamento = null ;
-    private JPanel pnBatalhaNaval = null ;
-    private Arma armaSelecionada = null ;
+    final int LARG_DEFAULT = 500 ;
+    final int ALT_DEFAULT = 300 ;
 
-    private GUIController() { pnInicio =  new PNInicio() ; }
+    final int LARG_SESSION = 1140 ;
+    final int ALT_SESSION = 600 ;
+
+    private static GUIController guiCtrl = null ;
+
+    private JFrame mainFrame = null ;
+    private JPanel pnMenu ;
+    private JPanel pnInicio = null ;
+    private JPanel pnPosicionamento = null ;
+    private JPanel pnBatalha = null ;
+
+    private Arma armaSelecionada = null ;
+    private int[][] clonedMatriz = null ;
+    private List<Arma> listaArmas = new ArrayList<Arma>(15);
+
+    private GUIController() { pnMenu =  new PNMenu() ; }
 
     public static GUIController getGUIController()
     {
@@ -27,81 +41,127 @@ public class GUIController
     void novaSessao( JFrame frame )
     {
         mainFrame = frame ;
+
+        Toolkit tk = Toolkit.getDefaultToolkit() ;
+        Dimension screenSize = tk.getScreenSize() ;
+        int screenWidth = screenSize.width ;
+        int screenHeight = screenSize.height ;
+        int x = screenWidth/2 - LARG_DEFAULT/2 ;
+        int y = screenHeight/2 - ALT_DEFAULT/2 ;
+
+        mainFrame.setBounds( x, y, LARG_DEFAULT, ALT_DEFAULT) ;
+
+        mainFrame.getContentPane().add( pnMenu ) ;
+    }
+
+    void goToPainelInicio()
+    {
+        mainFrame.remove( pnMenu ) ;
+
+        pnInicio = new PNInicio() ;
         mainFrame.getContentPane().add( pnInicio ) ;
+
+        mainFrame.revalidate() ;
+        mainFrame.repaint();
     }
 
     void goToPainelPosicionamento()
     {
-        pnInicio.setVisible( false ) ;
+        Toolkit tk = Toolkit.getDefaultToolkit() ;
+        Dimension screenSize = tk.getScreenSize() ;
+        int screenWidth = screenSize.width ;
+        int screenHeight = screenSize.height ;
+        int x = screenWidth/2 - LARG_SESSION/2 ;
+        int y = screenHeight/2 - ALT_SESSION/2 ;
 
-        if ( pnPosicionamento == null )
-        {
-            pnPosicionamento = new PNPosicionamento();
-            mainFrame.getContentPane().add(pnPosicionamento);
+        mainFrame.remove( pnInicio ) ;
 
-        } else {
-            pnPosicionamento.setVisible(true);
-        }
+        mainFrame.setBounds( x, y, LARG_SESSION, ALT_SESSION) ;
 
-        GUIController.getGUIController().setArmas(Fachada.getFachada().getQtdArmas1());
+        pnPosicionamento = new PNPosicionamento() ;
+        mainFrame.getContentPane().add( pnPosicionamento ) ;
+
+        GUIController.getGUIController().setArmas(Fachada.getFachada().getQtdArmas1()) ;
 
         mainFrame.revalidate() ;
+        mainFrame.repaint();
     }
 
     void goToPainelBatalhaNaval()
     {
-        pnPosicionamento.setVisible( false ) ;
+        mainFrame.remove( pnPosicionamento ) ;
 
-        if ( pnBatalhaNaval == null )
-        {
-            pnBatalhaNaval = new PNBatalha();
-            mainFrame.getContentPane().add(pnBatalhaNaval);
-
-        } else {
-            pnBatalhaNaval.setVisible( true );
-        }
+        pnBatalha = new PNBatalha() ;
+        mainFrame.getContentPane().add( pnBatalha ) ;
 
         mainFrame.revalidate() ;
+        mainFrame.repaint() ;
+    }
+
+    void goToMenu()
+    {
+        Toolkit tk = Toolkit.getDefaultToolkit() ;
+        Dimension screenSize = tk.getScreenSize() ;
+        int screenWidth = screenSize.width ;
+        int screenHeight = screenSize.height ;
+        int x = screenWidth/2 - LARG_DEFAULT/2 ;
+        int y = screenHeight/2 - ALT_DEFAULT/2 ;
+
+        mainFrame.remove( pnBatalha ) ;
+
+        mainFrame.setBounds( x, y, LARG_DEFAULT, ALT_DEFAULT) ;
+
+        pnMenu = new PNMenu() ;
+        mainFrame.getContentPane().add( pnMenu ) ;
+
+        mainFrame.revalidate() ;
+        mainFrame.repaint() ;
     }
 
     void setArmas(int[] armas )
     {
-        int width = 30;
+        TipoArma[] ordem = { TipoArma.HidroAviao,
+                          TipoArma.Submarino,
+                          TipoArma.Destroier,
+                          TipoArma.Cruzador,
+                          TipoArma.Couracado} ;
+        int width = 30 ;
         double yCorner = 100.0 ;
         double height = 30.0 ; // altura do retângulo
 
-        JPanel aux = null ;
+        Arma aux = null ;
         int lastArmaHeight = 0 ;
 
         //INSERE ARMA NO PAINEL
-        for (int i = 0; i < armas.length; i++)
+        for (int i = 0; i < ordem.length; i++)
         {
             for (int j = 0; j < armas[i]; j++) {
-                switch (i)
+                switch (ordem[i])
                 {
-                    case 0: { // Hidroaviao
+                    case HidroAviao: { // Hidroaviao
                         aux = new HidroAviao() ;
                         break;
                     }
-                    case 1: { // Submarino
+                    case Submarino: { // Submarino
                         aux = new Submarino() ;
                         break;
                     }
-                    case 2: { // Destroier
+                    case Destroier: { // Destroier
                         aux = new Destroier() ;
                         break;
                     }
-                    case 3: { // Cruzadores
+                    case Cruzador: { // Cruzadores
                         aux = new Cruzador() ;
                         break;
                     }
-                    case 4: { // Couracado
+                    case Couracado: { // Couracado
                         aux = new Couracado() ;
                         break;
                     }
                 }
                 aux.setLocation( (int)(width + (aux.getWidth()+width)*(j)) , (int) (yCorner + lastArmaHeight + (height)*i));
                 pnPosicionamento.add(aux) ;
+                listaArmas.add(aux) ;
             }
             lastArmaHeight += aux.getHeight();
         }
@@ -110,9 +170,17 @@ public class GUIController
     public void selectArma(Arma arma)
     {
         armaSelecionada = arma ;
+        clonedMatriz = armaSelecionada.getMatriz() ;
         armaSelecionada.grabFocus() ;
         armaSelecionada.repaint() ;
     }
+
+    public void rotateMatriz()
+    {
+        clonedMatriz = Arma.rotacionaMatrizEm90GrausHorario(clonedMatriz) ;
+    }
+
+    public int[][] getMatrizSelecionada() { return clonedMatriz ; }
 
     public Arma getArma() { return armaSelecionada ; }
 
@@ -123,8 +191,28 @@ public class GUIController
         if (comando == true) aux.setJogada();
 
         armaSelecionada = null ;
+        clonedMatriz = null ;
         aux.repaint();
     }
 
     public boolean existeArmaSelecionada() { return armaSelecionada != null ; }
+
+    public void replace(int identificador)
+    {
+        Arma aux, selected = null;
+
+        for (int i = 0; i < listaArmas.size(); i++)
+        {
+            aux = listaArmas.get(i) ;
+            if (aux.getIdentificacao() == identificador)
+            {
+                selected = aux ;
+                break;
+            }
+        }
+
+        selected.setReposicionada();
+        armaSelecionada = selected ;
+        clonedMatriz = armaSelecionada.getMatriz() ;
+    }
 }

@@ -1,7 +1,5 @@
 package com.regras;
 
-import com.gui.armas.TipoArma;
-
 public class Fachada
 {
     CtrlRegras ctrl ;
@@ -27,9 +25,9 @@ public class Fachada
 
     public String getPlayer2(  ) { return ctrl.getPlayer2() ; }
 
-    public int[][] getMatrizPlayer1() { return ctrl.getMatrizPlayer1() ; }
+    public No[][] getMatrizPlayer1() { return ctrl.getMatrizPlayer1() ; }
 
-    public int[][] getMatrizPlayer2() { return ctrl.getMatrizPlayer2() ; }
+    public No[][] getMatrizPlayer2() { return ctrl.getMatrizPlayer2() ; }
 
     public int[] getQtdArmas1() { return ctrl.getQtdArmas1() ; }
 
@@ -37,11 +35,19 @@ public class Fachada
 
     public int getVez() { return ctrl.getVez() ; }
 
-    public void posicionaPeca( int i, int j, int[][] matriz ) { ctrl.posicionaPeca(i, j, matriz) ; }
+    public void setVez(int vez) { ctrl.setVez(vez); }
 
-    public void tiro( int i, int j) { ctrl.tiro(i, j); }
+    public void setMatrizPlayer1( No[][] mat ) { ctrl.setMatrizPlayer1( mat ) ; }
 
-    public int testaResultado() { return ctrl.testaResultado() ; } ;
+    public void setMatrizPlayer2( No[][] mat ) { ctrl.setMatrizPlayer2( mat ) ; }
+
+    public void updateValues() { ctrl.updateValues() ; }
+
+    // public void posicionaPeca( int i, int j, int[][] matriz ) { ctrl.posicionaPeca(i, j, matriz) ; }
+
+    public void tiro( int i, int j) { ctrl.tiro( i , j ) ; }
+
+    // public int testaResultado() { return ctrl.testaResultado() ; } ;
 
     public void register(Observer o) {
         ctrl.addObserver(o);

@@ -10,7 +10,11 @@ public class Couracado extends Arma
         this.width = 150 ;
         this.height = 30 ;
         this.color = new Color(230, 88, 132) ;
-        this.matriz = new int[][] {{(int) 'a', (int) 'a',(int) 'a', (int) 'a', (int) 'a'}} ;
+        this.matriz = new int[][] {{TipoArma.Couracado.ordinal(),
+                                    TipoArma.Couracado.ordinal(),
+                                    TipoArma.Couracado.ordinal(),
+                                    TipoArma.Couracado.ordinal(),
+                                    TipoArma.Couracado.ordinal()}} ;
 
         this.setSize( width, height) ;
         this.setBackground( color ) ;

@@ -10,7 +10,8 @@ public class Destroier extends Arma
         this.width = 60 ;
         this.height = 30 ;
         this.color = new Color(220, 197, 26) ;
-        this.matriz = new int[][] {{(int) 'd', (int) 'd'}} ;
+        this.matriz = new int[][] {{ TipoArma.Destroier.ordinal(),
+                                     TipoArma.Destroier.ordinal() }} ;
 
         this.setSize( width, height) ;
         this.setBackground( color ) ;

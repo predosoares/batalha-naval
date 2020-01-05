@@ -2,9 +2,10 @@ package com.gui.armas;
 
 public enum TipoArma
 {
-    HidroAviao,
-    Submarino,
-    Destroier,
+    Vazio,
+    Couracado,
     Cruzador,
-    Couracado
+    Destroier,
+    Submarino,
+    HidroAviao
 }
