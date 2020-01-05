@@ -52,4 +52,9 @@ public class Fachada
     public void register(Observer o) {
         ctrl.addObserver(o);
     }
+    
+    public void salvaJogo( ) { ctrl.salvaJogo( ) ; }
+    
+    public Fachada carregaJogo( ) { ctrl = ctrl.carregaJogo( ) ; return f ; }
+
 }

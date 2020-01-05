@@ -2,10 +2,20 @@ package com.regras;
 
 import com.gui.armas.TipoArma;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-class CtrlRegras implements Observable
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import java.io.PrintStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+
+class CtrlRegras implements Observable, Serializable
 {
     private No tabPlayer1 [][] ;
     private No tabPlayer2 [][] ;
@@ -176,6 +186,50 @@ class CtrlRegras implements Observable
         for( Observer o:lob )
             o.notify(this) ;
     }
+    
+    public void salvaJogo()
+    {
+    	JFileChooser fc = new JFileChooser();
+    	int returnVal = fc.showSaveDialog(new JFrame());
+    	if(returnVal == JFileChooser.APPROVE_OPTION)
+    	{
+    		try
+    		{
+    			PrintStream ps = new PrintStream(fc.getSelectedFile()+ ".dat");
+    			ObjectOutputStream object = new ObjectOutputStream(ps);
+    			object.writeObject(this);
+    			object.flush();
+    			object.close();
+    		}
+    		catch(IOException e)
+    		{
+    			System.out.println(e);
+    		}
+    	}
+    }
+    
+    @SuppressWarnings("resource")
+	public CtrlRegras carregaJogo()
+    {
+		JFileChooser fc = new JFileChooser();
+		int returnVal = fc.showOpenDialog(null);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{
+		File fileSelected = fc.getSelectedFile();
+		FileInputStream fileIn = null;
+			try
+			{
+				fileIn = new FileInputStream(fileSelected);
+				ObjectInputStream is = new ObjectInputStream(fileIn);
+				CtrlRegras tabsCarregados = (CtrlRegras) is.readObject();
+				return tabsCarregados;
+			} catch (IOException | ClassNotFoundException e)
+			{
+					System.out.println(e);
+			}
+		}
+		return null;
+	}
 
     public void addObserver( Observer o ) { lob.add(o) ; }
 

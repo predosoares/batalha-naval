@@ -151,7 +151,7 @@ class PNPosicionamento extends JPanel implements MouseListener, KeyListener, Act
         {
             String number = (i >= 9) ? Integer.toString(i + 1) : " " + Integer.toString(i + 1) ;
 
-            g2d.drawString( Character.toString(65 + i), (int) (boxGap + letterShift), (int) yCorner - 10 + 30*(i + 1)) ;
+            g2d.drawString( String.valueOf(65 + i), (int) (boxGap + letterShift), (int) yCorner - 10 + 30*(i + 1)) ;
             g2d.drawString( number, (int) (boxGap + letterShift + 30*(i + 1)), (int) yCorner - 10) ;
 
             for (int column = 0 ; column < NUM_COLUMNS ; column++ )

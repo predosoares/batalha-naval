@@ -28,6 +28,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
     Observable obs;
     Object lob[];
+    Fachada ctrl ;
 
     private Rectangle2D.Double boxLeft[][] = new Rectangle2D.Double[15][15] ;
     private Rectangle2D.Double boxRight[][] = new Rectangle2D.Double[15][15] ;
@@ -42,11 +43,12 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
     JLabel labelPlayer2 = new JLabel() ;
     JLabel labelAuxText = new JLabel() ;
     JButton buttonPass = new JButton() ;
+    JButton salva = new JButton() ;
 
     public PNBatalha()
     {
         double x, y ;
-        Dimension dLabelPlayer1, dLabelPlayer2, dButtonPass, dLabelAuxText ;
+        Dimension dLabelPlayer1, dLabelPlayer2, dButtonPass, dSalva, dLabelAuxText ;
         Font fontName = new Font("SansSerif", Font.BOLD, 15) ;
         Font fontAuxText = new Font("SansSerif", Font.BOLD, 15) ;
 
@@ -86,6 +88,14 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
         buttonPass.addActionListener( this) ;
 
         this.add(buttonPass) ;
+        
+        salva.setFont( fontAuxText ) ;
+        salva.setText( "SALVAR JOGO!") ;
+        dSalva = salva.getPreferredSize() ;
+        salva.setBounds(800 - ( dSalva.width + 10 )/2,520, dSalva.width + 10, dSalva.height + 10 ) ;
+        salva.addActionListener( this) ;
+
+        this.add(salva) ;
 
         tabLeft = Fachada.getFachada().getMatrizPlayer1() ;
         tabRight = Fachada.getFachada().getMatrizPlayer2() ;
@@ -128,7 +138,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
         }
         else
         {
-            Dimension dButtonPass, dLabelAuxText ;
+            Dimension dButtonPass, dSalva, dLabelAuxText ;
             No[][] currPlayer = vez == 0 ? tabLeft : tabRight ;
             No[][] currEnemy = vez == 0 ? tabRight : tabLeft ;
 
@@ -203,11 +213,11 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
             String number = (i >= 9) ? Integer.toString(i + 1) : " " + Integer.toString(i + 1) ;
 
             // Esquerda
-            g2d.drawString( Character.toString(65 + i), 55, 65 + (int) height*(i + 1)) ;
+            g2d.drawString( String.valueOf(65 + i), 55, 65 + (int) height*(i + 1)) ;
             g2d.drawString( number, 55 + (int) width*(i + 1), 65) ;
 
             // Direita
-            g2d.drawString( Character.toString(65 + i), matGap + 55, 65 +(int) height*(i + 1)) ;
+            g2d.drawString( String.valueOf(65 + i), matGap + 55, 65 +(int) height*(i + 1)) ;
             g2d.drawString( number, matGap + 50 +(int) width*(i + 1), 65) ;
 
             for (int column = 0 ; column < NUM_COLUMNS ; column++ )
@@ -280,7 +290,10 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
     @Override
     public void actionPerformed(ActionEvent actionEvent)
     {
-        if ( vez == -1 )
+    	if(actionEvent.getSource() == salva) {
+			ctrl.salvaJogo();
+		}
+    	else if ( vez == -1 )
         {
             vez = 0 ;
             Fachada.getFachada().updateValues() ;

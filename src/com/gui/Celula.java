@@ -1,6 +1,8 @@
 package com.gui;
 
-class Celula
+import java.io.Serializable;
+
+public class Celula implements Serializable
 {
     double x, y ;
 
