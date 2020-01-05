@@ -89,8 +89,11 @@ public class GUIController
 
     void goToPainelBatalhaNaval()
     {
-        mainFrame.remove( pnPosicionamento ) ;
-
+    	if( pnPosicionamento != null ) 
+    	{
+    		mainFrame.remove( pnPosicionamento ) ;
+    	}
+    	
         pnBatalha = new PNBatalha() ;
         mainFrame.getContentPane().add( pnBatalha ) ;
 

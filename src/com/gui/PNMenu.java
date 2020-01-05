@@ -1,6 +1,9 @@
 package com.gui;
 
 import javax.swing.*;
+
+import com.regras.Fachada;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +44,9 @@ public class PNMenu extends JPanel implements ActionListener
         }
         else if ( actionEvent.getSource() == buttonCarregarPartida )
         {
-
+        	Fachada.getFachada() ;
+        	Fachada.getFachada().carregaJogo() ;
+        	GUIController.getGUIController().goToPainelBatalhaNaval() ;
         }
     }
 }

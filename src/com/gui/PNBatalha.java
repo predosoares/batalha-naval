@@ -28,7 +28,6 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
     Observable obs;
     Object lob[];
-    Fachada ctrl ;
 
     private Rectangle2D.Double boxLeft[][] = new Rectangle2D.Double[15][15] ;
     private Rectangle2D.Double boxRight[][] = new Rectangle2D.Double[15][15] ;
@@ -59,6 +58,8 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
         labelPlayer1.setFont( fontName ) ;
         labelPlayer1.setForeground( new Color(81, 81, 81) );
+        System.out.println("asdasdasdsadasda\n\n\n");
+        System.out.println(Fachada.getFachada());
         labelPlayer1.setText( "TABULEIRO DE " + player1.toUpperCase() ) ;
         dLabelPlayer1 = labelPlayer1.getPreferredSize() ;
         labelPlayer1.setBounds( xCorner, height, dLabelPlayer1.width, dLabelPlayer1.height ) ;
@@ -291,7 +292,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
     public void actionPerformed(ActionEvent actionEvent)
     {
     	if(actionEvent.getSource() == salva) {
-			ctrl.salvaJogo();
+    		Fachada.getFachada().salvaJogo() ;
 		}
     	else if ( vez == -1 )
         {
