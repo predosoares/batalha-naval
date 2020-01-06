@@ -380,7 +380,7 @@ class PNPosicionamento extends JPanel implements MouseListener, KeyListener, Act
             else {
                 Fachada.getFachada().setMatrizPlayer2(mat) ;
                 Fachada.getFachada().setVez(0) ;
-                GUIController.getGUIController().goToPainelBatalhaNaval();
+                GUIController.getGUIController().goToPainelBatalhaNaval(Fachada.getFachada());
             }
         }
     }

@@ -28,6 +28,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
     Observable obs;
     Object lob[];
+    Fachada ctrl;
 
     private Rectangle2D.Double boxLeft[][] = new Rectangle2D.Double[15][15] ;
     private Rectangle2D.Double boxRight[][] = new Rectangle2D.Double[15][15] ;
@@ -44,8 +45,9 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
     JButton buttonPass = new JButton() ;
     JButton salva = new JButton() ;
 
-    public PNBatalha()
+    public PNBatalha(Fachada fachada)
     {
+    	ctrl = fachada;
         double x, y ;
         Dimension dLabelPlayer1, dLabelPlayer2, dButtonPass, dSalva, dLabelAuxText ;
         Font fontName = new Font("SansSerif", Font.BOLD, 15) ;
@@ -53,8 +55,8 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
         this.setLayout( null ) ;
 
-        player1 = Fachada.getFachada().getPlayer1() ;
-        player2 = Fachada.getFachada().getPlayer2() ;
+        player1 = ctrl.getPlayer1() ;
+        player2 = ctrl.getPlayer2() ;
 
         labelPlayer1.setFont( fontName ) ;
         labelPlayer1.setForeground( new Color(81, 81, 81) );
@@ -101,8 +103,8 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
         this.add(salva) ;
 
-        tabLeft = Fachada.getFachada().getMatrizPlayer1() ;
-        tabRight = Fachada.getFachada().getMatrizPlayer2() ;
+        tabLeft = ctrl.getMatrizPlayer1() ;
+        tabRight = ctrl.getMatrizPlayer2() ;
 
         addMouseListener(this) ;
 
@@ -119,7 +121,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
             }
         }
 
-        Fachada.getFachada().register(this) ;
+        ctrl.register(this) ;
     }
 
     public void paintComponent(Graphics g)
@@ -251,7 +253,7 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
 
             if (linha > -1 && linha < 15 && coluna > -1 && coluna < 15)
             {
-                Fachada.getFachada().tiro( linha , coluna ) ;
+                ctrl.tiro( linha , coluna ) ;
             }
 
         }
@@ -277,16 +279,16 @@ public class PNBatalha extends JPanel implements MouseListener, ActionListener, 
         String msg="";
 
         if ( resPartida == 100 )
-            msg = Fachada.getFachada().getPlayer1() + " Venceu a Partida!" ;
+            msg = ctrl.getPlayer1() + " Venceu a Partida!" ;
         else if ( resPartida == 200 )
-            msg = Fachada.getFachada().getPlayer2() + " Venceu a Partida!" ;
+            msg = ctrl.getPlayer2() + " Venceu a Partida!" ;
 
         repaint() ;
 
         if (msg!="")
         {
             JOptionPane.showMessageDialog(this, msg ) ;
-            Fachada.getFachada().novoJogo() ;
+            ctrl.novoJogo() ;
             GUIController.getGUIController().goToMenu() ;
         }
     }

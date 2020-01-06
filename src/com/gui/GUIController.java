@@ -87,14 +87,28 @@ public class GUIController
         mainFrame.repaint();
     }
 
-    void goToPainelBatalhaNaval()
+    void goToPainelBatalhaNaval(Fachada fachada)
     {
+    	Toolkit tk = Toolkit.getDefaultToolkit() ;
+        Dimension screenSize = tk.getScreenSize() ;
+        int screenWidth = screenSize.width ;
+        int screenHeight = screenSize.height ;
+        int x = screenWidth/2 - LARG_SESSION/2 ;
+        int y = screenHeight/2 - ALT_SESSION/2 ;
+
+        mainFrame.setBounds( x, y, LARG_SESSION, ALT_SESSION) ;
+        
+    	if( pnMenu != null ) 
+    	{
+    		mainFrame.remove( pnMenu ) ;
+    	}
+    	
     	if( pnPosicionamento != null ) 
     	{
     		mainFrame.remove( pnPosicionamento ) ;
     	}
     	
-        pnBatalha = new PNBatalha() ;
+        pnBatalha = new PNBatalha( fachada ) ;
         mainFrame.getContentPane().add( pnBatalha ) ;
 
         mainFrame.revalidate() ;

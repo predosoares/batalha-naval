@@ -1,7 +1,10 @@
 package com.regras;
 
-public class Fachada
+import java.io.Serializable;
+
+public class Fachada implements Serializable
 {
+	private static final long serialVersionUID = 1L;
     CtrlRegras ctrl ;
     static Fachada f = null ;
 
